@@ -1,5 +1,7 @@
 package oncall.model;
 
+import oncall.util.Validator;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -15,7 +17,7 @@ public class Matching {
         this.month = Month.getMonth(month);
         this.workerMatching = new ArrayList<>();
         this.holiday = Holiday.getHoliday(this.month);
-        this.dayStart = days.indexOf(day);
+        this.dayStart = days.indexOf(Validator.validateDay(day));
     }
 
     public Month getMonth() {
