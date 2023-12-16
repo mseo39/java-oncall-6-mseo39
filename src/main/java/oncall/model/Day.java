@@ -21,4 +21,11 @@ public enum Day {
         }
         return false;
     }
+
+    public static boolean isWeekend(String input){
+        if(WEEKEND.days.contains(input)){
+            return true;
+        }
+        return false;
+    }
 }

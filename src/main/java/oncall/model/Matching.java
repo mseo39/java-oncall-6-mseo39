@@ -45,7 +45,7 @@ public class Matching {
             if (Day.isWeekday(days.get((i + day) % days.size()))) {
                 weekdayWorker = processWeekday(worker, weekdayWorker);
             }
-            if (!Day.isWeekday(days.get((i + day) % days.size())) || Holiday.getHoliday(this.month).getDays().contains(i)) {
+            if (Day.isWeekend(days.get((i + day) % days.size())) || Holiday.getHoliday(this.month).getDays().contains(i)) {
                 weekendWorker = processWeekend(worker, weekendWorker);
             }
         }
