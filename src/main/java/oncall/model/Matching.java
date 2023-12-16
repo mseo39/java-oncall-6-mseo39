@@ -42,7 +42,8 @@ public class Matching {
         for (int i = 0; i < this.month.getMax(); i++) {
             if (Day.isWeekday(days.get((i + day) % days.size()))) {
                 weekdayWorker = processWeekday(worker, weekdayWorker);
-            } else if (!Day.isWeekday(days.get((i + day) % days.size())) || Holiday.getHoliday(this.month).getDays().contains(i)) {
+            }
+            if (!Day.isWeekday(days.get((i + day) % days.size())) || Holiday.getHoliday(this.month).getDays().contains(i)) {
                 weekendWorker = processWeekend(worker, weekendWorker);
             }
         }
