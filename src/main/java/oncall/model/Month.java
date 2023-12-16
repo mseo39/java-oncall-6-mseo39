@@ -3,6 +3,7 @@ package oncall.model;
 import oncall.view.ErrorPhrase;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public enum Month {
     JANUARY(1, 1, 31),
@@ -41,9 +42,11 @@ public enum Month {
     }
 
     public static Month getMonth(int input){
+        if(input==APRIL.name){
+            return APRIL;
+        }
         return Arrays.stream(Month.values())
-                .filter(month -> month.getName()==input)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ErrorPhrase.EXIST_DAY.getPhrase()));
+                .filter(month -> month.name==input)
+                .findFirst().orElseThrow(() -> new IllegalArgumentException(ErrorPhrase.EXIST_DAY.getPhrase()));
     }
 }

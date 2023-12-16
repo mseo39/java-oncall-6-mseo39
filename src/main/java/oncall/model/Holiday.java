@@ -12,7 +12,8 @@ public enum Holiday {
     JUNE(Month.JUNE, Arrays.asList(6)),
     AUGUST(Month.AUGUST, Arrays.asList(15)),
     OCTOBER(Month.OCTOBER, Arrays.asList(3, 9)),
-    DECEMBER(Month.DECEMBER, Arrays.asList(25));
+    DECEMBER(Month.DECEMBER, Arrays.asList(25)),
+    NOT(Month.OCTOBER, Arrays.asList(0));
 
     private Month month;
     private List<Integer> days;
@@ -23,10 +24,14 @@ public enum Holiday {
         this.days = days;
     }
 
+    public List<Integer> getDays() {
+        return days;
+    }
+
     public static Holiday getHoliday(Month month) {
         return Arrays.stream(Holiday.values())
                 .filter(holiday -> holiday.month.equals(month))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ErrorPhrase.EXIST_DAY.getPhrase()));
+                .orElse(NOT);
     }
 }
