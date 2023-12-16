@@ -20,6 +20,14 @@ public class Worker {
         this.weekend = weekend;
     }
 
+    public List<String> getWeekday() {
+        return weekday;
+    }
+
+    public List<String> getWeekend() {
+        return weekend;
+    }
+
     public static void nameLength(List<String> worker) {
         for (String name : worker) {
             if (name.length() > 5 || name.length() < 1) {

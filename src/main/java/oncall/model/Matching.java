@@ -23,4 +23,16 @@ public class Matching {
         }
         return true;
     }
+
+    public void changeWeekdayWorker(Worker worker, int index){
+        String tmp = worker.getWeekday().get(index);
+        worker.getWeekday().set(index, worker.getWeekday().get(index+1));
+        worker.getWeekday().set(index+1,tmp);
+    }
+
+    public void changeWeekendWorker(Worker worker, int index){
+        String tmp = worker.getWeekend().get(index);
+        worker.getWeekend().set(index, worker.getWeekend().get(index+1));
+        worker.getWeekend().set(index+1,tmp);
+    }
 }
