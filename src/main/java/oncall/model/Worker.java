@@ -10,6 +10,12 @@ public class Worker {
     private List<String> weekend;
 
     public Worker(List<String> weekday, List<String> weekend) {
+        nameLength(weekday);
+        nameLength(weekend);
+        validateWorkerNum(weekday);
+        validateWorkerNum(weekend);
+        validateNameDuplicate(weekday);
+        validateNameDuplicate(weekend);
         this.weekday = weekday;
         this.weekend = weekend;
     }
