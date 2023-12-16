@@ -37,7 +37,7 @@ public class Worker {
     }
 
     public static void validateWorkerNum(List<String> worker) {
-        if (worker.size() >= 5 && worker.size() <= 35) {
+        if (worker.size() < 5 || worker.size() > 35) {
             throw new IllegalArgumentException(ErrorPhrase.WORKER_LENGTH.getPhrase());
         }
     }
