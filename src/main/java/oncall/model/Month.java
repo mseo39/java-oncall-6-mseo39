@@ -42,9 +42,6 @@ public enum Month {
     }
 
     public static Month getMonth(int input){
-        if(input==APRIL.name){
-            return APRIL;
-        }
         return Arrays.stream(Month.values())
                 .filter(month -> month.name==input)
                 .findFirst().orElseThrow(() -> new IllegalArgumentException(ErrorPhrase.EXIST_DAY.getPhrase()));
