@@ -15,7 +15,7 @@ public class Matching {
         this.month = Month.getMonth(month);
         this.workerMatching = new ArrayList<>();
         this.holiday = Holiday.getHoliday(this.month);
-        this.dayStart=days.indexOf(day);
+        this.dayStart = days.indexOf(day);
     }
 
     public Month getMonth() {
@@ -36,56 +36,67 @@ public class Matching {
 
     public List<String> matchingLogic(Worker worker) {
         int day = this.dayStart;
-        System.out.println(day);
-        int weekdayWorker=0;
-        int weekendWorker=0;
+        int weekdayWorker = 0;
+        int weekendWorker = 0;
 
         for (int i = 0; i < this.month.getMax(); i++) {
-            if (Day.isWeekday(days.get((i+day) % days.size()))) {
-                String name = worker.getWeekday().get(weekdayWorker % worker.getWeekday().size());
-                if (checkFrontWorker(name)) {
-                    this.workerMatching.add(name);
-                    weekdayWorker++;
-                    continue;
-                }
-                changeWeekdayWorker(worker, weekdayWorker % worker.getWeekday().size());
-                this.workerMatching.clear();
-                matchingLogic(worker);
-            }
-            if (!Day.isWeekday(days.get((i+day) % days.size())) || Holiday.getHoliday(this.month).getDays().contains(i)) {
-                String name = worker.getWeekend().get(weekendWorker % worker.getWeekend().size());
-                if (checkFrontWorker(name)) {
-                    this.workerMatching.add(name);
-                    weekendWorker++;
-                    continue;
-                }
-                changeWeekendWorker(worker, weekendWorker % worker.getWeekend().size());
-                this.workerMatching.clear();
-                matchingLogic(worker);
+            if (Day.isWeekday(days.get((i + day) % days.size()))) {
+                weekdayWorker = processWeekday(worker, weekdayWorker);
+            } else if (!Day.isWeekday(days.get((i + day) % days.size())) || Holiday.getHoliday(this.month).getDays().contains(i)) {
+                weekendWorker = processWeekend(worker, weekendWorker);
             }
         }
         return this.workerMatching;
     }
 
+    private int processWeekday(Worker worker, int weekdayWorker) {
+        String name = worker.getWeekday().get(weekdayWorker % worker.getWeekday().size());
+        if (checkFrontWorker(name)) {
+            this.workerMatching.add(name);
+            weekdayWorker++;
+        } else {
+            weekdayWorker = updateWeekdayWorker(worker, weekdayWorker);
+            this.workerMatching.clear();
+            matchingLogic(worker);
+        }
+        return weekdayWorker;
+    }
+
+    private int processWeekend(Worker worker, int weekendWorker) {
+        String name = worker.getWeekend().get(weekendWorker % worker.getWeekend().size());
+        if (checkFrontWorker(name)) {
+            this.workerMatching.add(name);
+            weekendWorker++;
+        } else {
+            weekendWorker = updateWeekendWorker(worker, weekendWorker);
+            this.workerMatching.clear();
+            matchingLogic(worker);
+        }
+        return weekendWorker;
+    }
+
+    private int updateWeekdayWorker(Worker worker, int index) {
+        String tmp = worker.getWeekday().get(index);
+        worker.getWeekday().set(index, worker.getWeekday().get(index + 1));
+        worker.getWeekday().set(index + 1, tmp);
+        return index;
+    }
+
+    private int updateWeekendWorker(Worker worker, int index) {
+        String tmp = worker.getWeekend().get(index);
+        worker.getWeekend().set(index, worker.getWeekend().get(index + 1));
+        worker.getWeekend().set(index + 1, tmp);
+        return index;
+    }
+
+
     public boolean checkFrontWorker(String name) {
-        if(workerMatching.size()==0){
+        if (workerMatching.size() == 0) {
             return true;
         }
         if (workerMatching.get(workerMatching.size() - 1).equals(name)) {
             return false;
         }
         return true;
-    }
-
-    public void changeWeekdayWorker(Worker worker, int index) {
-        String tmp = worker.getWeekday().get(index);
-        worker.getWeekday().set(index, worker.getWeekday().get(index + 1));
-        worker.getWeekday().set(index + 1, tmp);
-    }
-
-    public void changeWeekendWorker(Worker worker, int index) {
-        String tmp = worker.getWeekend().get(index);
-        worker.getWeekend().set(index, worker.getWeekend().get(index + 1));
-        worker.getWeekend().set(index + 1, tmp);
     }
 }
