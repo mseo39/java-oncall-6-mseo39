@@ -3,6 +3,7 @@ package oncall.model;
 import oncall.view.ErrorPhrase;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Worker {
     private List<String> weekday;
@@ -24,6 +25,12 @@ public class Worker {
     public static void validateWorkerNum(List<String> worker) {
         if (worker.size() >= 5 && worker.size() <= 35) {
             throw new IllegalArgumentException(ErrorPhrase.WORKER_LENGTH.getPhrase());
+        }
+    }
+
+    public static void validateNameDuplicate(List<String> worker){
+        if(worker.size()!=worker.stream().distinct().collect(Collectors.toList()).size()){
+            throw new IllegalArgumentException(ErrorPhrase.NAME_DUPLACATE.getPhrase());
         }
     }
 }
