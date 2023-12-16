@@ -4,6 +4,7 @@ import oncall.model.Matching;
 import oncall.model.Worker;
 import oncall.util.Validator;
 import oncall.view.InputView;
+import oncall.view.OutputView;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class Controller {
     public void startProgram() {
         requestReadMonth();
         requestReadWorker();
+        requestMatching();
     }
 
     public void requestReadMonth(){
@@ -42,5 +44,10 @@ public class Controller {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    public void requestMatching(){
+        matching.matchingLogic(worker);
+        OutputView.printMatching(this.matching);
     }
 }
